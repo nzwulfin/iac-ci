@@ -16,9 +16,7 @@ pipeline {
     yum -y install gcc python-pip python-devel openssl-devel && \\
     pip install docker molecule testinfra && \\
     yum clean all
-
-echo $WORKSPACE
-pwd'''
+'''
       }
     }
     stage('Role lint') {
