@@ -63,7 +63,7 @@ molecule verify'''
     stage('Test infrastructure') {
       steps {
 	sshagent(credentials: ['ansiblekey']) {
-          sh '''testinfra ansible/roles/webserver/molecule/default/tests/test_default.py ''
+          sh '''testinfra ansible/roles/webserver/molecule/default/tests/test_default.py'''
         }
       }
     }
