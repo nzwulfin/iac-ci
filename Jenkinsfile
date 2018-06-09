@@ -57,8 +57,7 @@ molecule verify'''
     }
     stage('Stage Ansible run') {
       steps {
-        sh '''cd $WORKSPACE/ansible &&
-ansible-playbook -i inventory -u root site.yml'''
+        ansiblePlaybook(playbook: 'site.yml', disableHostKeyChecking: true, colorized: true, inventory: 'inventory', credentialsId: 'ansiblekey')
       }
     }
   }
