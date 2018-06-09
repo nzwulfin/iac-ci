@@ -46,7 +46,7 @@ molecule idempotence'''
     stage('Role side_effect') {
       steps {
         sh '''cd $ROLEDIR
-molecule side_effect'''
+molecule side-effect'''
       }
     }
     stage('Role verify') {
