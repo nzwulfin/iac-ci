@@ -7,6 +7,12 @@ pipeline {
 
   }
   stages {
+    stage('Role syntax') {
+      steps {
+        sh '''cd $ROLEDIR
+molecule syntax'''
+      }
+    }
     stage('Role dependecies') {
       steps {
         sh '''cd $ROLEDIR
@@ -29,6 +35,18 @@ molecule prepare'''
       steps {
         sh '''cd $ROLEDIR
 molecule converge'''
+      }
+    }
+    stage('Role idempotence') {
+      steps {
+        sh '''cd $ROLEDIR
+molecule idempotence'''
+      }
+    }
+    stage('Role side_effect') {
+      steps {
+        sh '''cd $ROLEDIR
+molecule side_effect'''
       }
     }
     stage('Role verify') {
