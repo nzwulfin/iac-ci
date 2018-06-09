@@ -60,6 +60,14 @@ molecule verify'''
         ansiblePlaybook(playbook: 'ansible/site.yml', disableHostKeyChecking: true, colorized: true, inventory: 'ansible/inventory', credentialsId: 'ansiblekey')
       }
     }
+    stage('Test infrastructure') {
+      environment {
+        MOLECULE_INVENTORY_FILE = 'ansible/inventory'
+      }
+      steps {
+        sh 'testinfra ansible/roles/webserver/molecule/default/tests/test_default.py '
+      }
+    }
   }
   environment {
     ROLEDIR = 'ansible/roles/webserver'
