@@ -62,8 +62,9 @@ molecule verify'''
     }
     stage('Test infrastructure') {
       steps {
-	sshagent(credentials: ['ansiblekey']) {
-          sh '''testinfra ansible/roles/webserver/molecule/default/tests/test_default.py'''
+        withCredentials([sshUserPrivateKey(credentialsId: 'ansiblekey', keyFileVariable: 'keyfile', passphraseVariable: '', usernameVariable: '')]) {
+          sh '''echo ${keyfile}
+testinfra ansible/roles/webserver/molecule/default/tests/test_default.py --ssh-identity-file=${keyfile}'''
         }
       }
     }
