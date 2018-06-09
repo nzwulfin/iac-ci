@@ -56,11 +56,8 @@ molecule verify'''
       }
     }
     stage('Stage Ansible run') {
-      environment {
-        WORKSPACE = '$WORKSPACE/ansible'
-      }
       steps {
-        ansiblePlaybook(playbook: 'site.yml', disableHostKeyChecking: true, colorized: true, inventory: 'inventory', credentialsId: 'ansiblekey')
+        ansiblePlaybook(playbook: 'ansible/site.yml', disableHostKeyChecking: true, colorized: true, inventory: 'ansible/inventory', credentialsId: 'ansiblekey')
       }
     }
   }
