@@ -1,47 +1,44 @@
 pipeline {
   agent {
     docker {
-      image 'centos'
       args ''
+      image 'molecule-base'
     }
 
   }
   stages {
-    stage('Molecule deps') {
-      environment {
-        WORKSPACE = 'ansible/roles/webserver'
-      }
-      steps {
-        sh '''yum -y install epel-release && \\
-    yum -y install gcc python-pip python-devel openssl-devel && \\
-    pip install docker molecule testinfra && \\
-    yum clean all
-'''
-      }
-    }
-    stage('Role lint') {
-      environment {
-        WORKSPACE = 'ansible/roles/webserver'
-      }
-      steps {
-        sh '''cd $WORKSPACE
-molecule lint'''
-      }
-    }
     stage('Role dependecies') {
       steps {
-        sh 'molecule dependency'
+        sh '''cd $ROLEDIR
+molecule dependency'''
       }
     }
-    stage('Role destroy') {
+    stage('Role create') {
       steps {
-        sh 'molecule destroy'
+        sh '''cd $ROLEDIR
+molecule create'''
       }
     }
-    stage('Role syntax') {
+    stage('Role prepare') {
       steps {
-        sh 'molecule syntax'
+        sh '''cd $ROLEDIR
+molecule prepare'''
       }
     }
+    stage('Role converge') {
+      steps {
+        sh '''cd $ROLEDIR
+molecule converge'''
+      }
+    }
+    stage('Role verify') {
+      steps {
+        sh '''cd $ROLEDIR
+molecule verify'''
+      }
+    }
+  }
+  environment {
+    ROLEDIR = 'ansible/roles/webserver'
   }
 }
