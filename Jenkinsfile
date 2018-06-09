@@ -46,13 +46,19 @@ molecule idempotence'''
     stage('Role side_effect') {
       steps {
         sh '''cd $ROLEDIR
-molecule side_effect'''
+molecule side-effect'''
       }
     }
     stage('Role verify') {
       steps {
         sh '''cd $ROLEDIR
 molecule verify'''
+      }
+    }
+    stage('Stage Ansible run') {
+      steps {
+        sh '''cd $WORKSPACE/ansible &&
+ansible-playbook -i inventory -u root site.yml'''
       }
     }
   }
