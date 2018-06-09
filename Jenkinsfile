@@ -2,6 +2,10 @@ pipeline {
   agent {
     docker {
       image 'centos'
+      args '''yum -y install epel-release && \\\\
+    yum -y install gcc python-pip python-devel openssl-devel && \\\\
+    pip install docker molecule testinfra && \\\\
+    yum clean all'''
     }
 
   }
