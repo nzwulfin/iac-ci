@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Molecule deps') {
       environment {
-        WORKSPACE = 'iac-ci/ansible/roles/webserver'
+        WORKSPACE = 'ansible/roles/webserver'
       }
       steps {
         sh '''yum -y install epel-release && \\
@@ -22,8 +22,12 @@ pwd'''
       }
     }
     stage('Role lint') {
+      environment {
+        WORKSPACE = 'ansible/roles/webserver'
+      }
       steps {
-        sh 'molecule lint'
+        sh '''cd $WORKSPACE
+molecule lint'''
       }
     }
     stage('Role dependecies') {
