@@ -55,6 +55,12 @@ molecule side-effect'''
 molecule verify'''
       }
     }
+    stage('Stage Ansible run') {
+      steps {
+        sh '''cd $WORKSPACE/ansible &&
+ansible-playbook -i inventory -u root site.yml'''
+      }
+    }
   }
   environment {
     ROLEDIR = 'ansible/roles/webserver'
