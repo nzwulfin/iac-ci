@@ -61,11 +61,15 @@ molecule verify'''
       }
     }
     stage('Test infrastructure') {
+      environment {
+        MOLECULE_INVENTORY_FILE = 'ansible/inventory'
+      }
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'ansiblekey', keyFileVariable: 'KEYFILE')]) {
+        withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'ansiblekey', keyFileVariable: 'KEYFILE')]) {
           sh '''echo ${KEYFILE}
 testinfra ansible/roles/webserver/molecule/default/tests/test_default.py --ssh-identity-file=${KEYFILE}'''
         }
+
       }
     }
   }
