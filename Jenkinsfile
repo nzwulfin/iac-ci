@@ -4,9 +4,13 @@ pipeline {
       image 'centos'
       args ''
     }
+
   }
   stages {
     stage('Molecule deps') {
+      environment {
+        WORKSPACE = 'iac-ci/ansible/roles/webserver'
+      }
       steps {
         sh '''yum -y install epel-release && \\
     yum -y install gcc python-pip python-devel openssl-devel && \\
