@@ -2,17 +2,16 @@ pipeline {
   agent {
     docker {
       image 'centos'
-      args '"
+      args ''
     }
-
   }
   stages {
     stage('Molecule deps') {
       steps {
-        sh 'yum -y install epel-release && \\
+        sh '''yum -y install epel-release && \\
     yum -y install gcc python-pip python-devel openssl-devel && \\
     pip install docker molecule testinfra && \\
-    yum clean all'
+    yum clean all'''
       }
     }
     stage('Role lint') {
