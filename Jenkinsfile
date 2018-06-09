@@ -63,6 +63,7 @@ molecule verify'''
     stage('Test infrastructure') {
       environment {
         MOLECULE_INVENTORY_FILE = 'ansible/inventory'
+        DEFAULT_PRIVATE_KEY_FILE = 'ansiblekey'
       }
       steps {
         sh 'testinfra ansible/roles/webserver/molecule/default/tests/test_default.py '
