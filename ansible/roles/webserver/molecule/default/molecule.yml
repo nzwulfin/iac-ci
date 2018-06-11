@@ -5,9 +5,15 @@ driver:
   name: docker
 lint:
   name: yamllint
+  enabled: False
 platforms:
   - name: instance
-    image: centos
+    image: centos/systemd
+    command: /sbin/init
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
 provisioner:
   name: ansible
   lint:

@@ -1,4 +1,4 @@
 ---
 # vars file for webserver
-
-
+apacheMaxRequestsPerChild: 3000
+apacheMaxClients: 900

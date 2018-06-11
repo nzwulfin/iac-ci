@@ -12,3 +12,13 @@ def test_hosts_file(host):
     assert f.exists
     assert f.user == 'root'
     assert f.group == 'root'
+
+
+def test_httpd_runing(Service):
+    httpd = Service("httpd")
+    assert httpd.is_running
+
+
+def test_index_contents(File):
+    index = File("/var/www/html/index.html")
+    assert index.exists
