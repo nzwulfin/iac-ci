@@ -66,8 +66,7 @@ molecule verify'''
       }
       steps {
         withCredentials(bindings: [sshUserPrivateKey(credentialsId: 'ansiblekey', keyFileVariable: 'KEYFILE')]) {
-          sh '''echo ${KEYFILE}
-testinfra --connection=ansible ansible/roles/webserver/molecule/default/tests/test_default.py --ssh-identity-file=${KEYFILE}'''
+          sh 'testinfra --ssh-identity-file=${KEYFILE} --connection=ansible --ansible-inventory=ansible/inventory ansible/roles/webserver/molecule/default/tests/test_default.py  '
         }
 
       }
